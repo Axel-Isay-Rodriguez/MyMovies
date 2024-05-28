@@ -15,18 +15,15 @@
             </li>
             {% else %}
             <li>
-                <a class="text-blue-700 hover:text-indigo-700" href="{% url 'login_view' %}">Login</a>
+                <a class="text-blue-700 hover:text-indigo-700" href="{% url 'login_view' %}">Inicia Sesión</a>
             </li>
             {% endif %}
             <li>
-                <a class="text-blue-700 hover:text-indigo-700" href="{% url 'index' %}">Movies</a>
-            </li>
-            <li>
-                <a class="text-blue-700 hover:text-indigo-700" href="{% url 'discover_view' %}">Discover</a>
+                <a class="text-blue-700 hover:text-indigo-700" href="{% url 'discover_view' %}">Explora</a>
             </li>
             {% if user.is_authenticated %}
             <li>
-                <a class="text-gray-400" href="{% url 'logout_view' %}">Log Out</a>
+                <a class="text-gray-400" href="{% url 'logout_view' %}">Cerrar Sesión</a>
             </li>
             {% endif %}
         </ul>
