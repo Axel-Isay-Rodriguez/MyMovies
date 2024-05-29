@@ -1,32 +1,32 @@
 <header class="flex flex-col items-center mt-5">
-    <div class="relative inline-block group">
-        <h1 class="text-3xl font-medium text-center">
-            <a href="{% url 'index' %}">My Movies</a>
-        </h1>
-        <div
-            class="absolute bottom-0 left-0 w-full h-0.5 bg-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        </div>
+  <div class="relative inline-block group">
+    <h1 class="text-3xl font-medium text-center" style="color: white;"> 
+      <a href="{% url 'index' %}">My Movies</a>
+    </h1>
+    <div
+      class="absolute bottom-0 left-0 w-full h-0.5 bg-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
     </div>
-    <nav class="mt-2 mb-4">
-        <ul class="flex space-x-20">
-            {% if user.is_authenticated %}
-            <li>
-                <a href="{% url 'user_view' user.id %}" class="text-blue-700 hover:text-indigo-700" >{{ user.username }}</a>
-            </li>
-            {% else %}
-            <li>
-                <a class="text-blue-700 hover:text-indigo-700" href="{% url 'login_view' %}">Inicia Sesión</a>
-            </li>
-            {% endif %}
-            <li>
-                <a class="text-blue-700 hover:text-indigo-700" href="{% url 'discover_view' %}">Explora</a>
-            </li>
-            {% if user.is_authenticated %}
-            <li>
-                <a class="text-gray-400" href="{% url 'logout_view' %}">Cerrar Sesión</a>
-            </li>
-            {% endif %}
-        </ul>
-    </nav>
+  </div>
+  <nav class="mt-2 mb-4">
+    <ul class="flex space-x-20">
+      {% if user.is_authenticated %}
+      <li>
+        <a href="{% url 'user_view' user.id %}" class="text-white" >{{ user.username }}</a>
+      </li>
+      {% else %}
+      <li>
+        <a class="text-white" href="{% url 'login_view' %}">Inicia Sesión</a>
+      </li>
+      {% endif %}
+      <li>
+        <a class="text-white" href="{% url 'discover_view' %}">Explora</a>
+      </li>
+      {% if user.is_authenticated %}
+      <li>
+        <a class="text-white" href="{% url 'logout_view' %}">Cerrar Sesión</a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
 </header>
 
