@@ -36,24 +36,23 @@
           <p>Ganancias: ${{ movie.revenue|floatformat:0 }}</p>
         </div>
       </div>
-
-      <section class="overflow-x-auto">
-        <h2 class="text-xl font-bold underline text-center text-gray-800 py-8">Elenco de la pelicula</h2>
-        <div class="flex flex-wrap justify-center gap-6">
-          {% for credit in credits %}
-          <a href="{% url 'actor_detail' credit.person.id %}" class="flex-shrink-0">
-              <div class="bg-gray-100 rounded-lg shadow-md flex flex-col items-center p-4 w-48">
-                <img src="https://image.tmdb.org/t/p/w500/{{ credit.person.poster_path }}" alt="Imagen de Casting" class="rounded-full w-24 h-24 object-cover">
-                <div class="mt-4">
-                  <h3 class="text-lg font-semibold text-gray-800">{{ credit.person.name }}</h3>
-                  <p class="text-sm text-gray-600">{{ credit.job.name }}</p>
-                </div>
-              </div>
-            </a>
-          {% endfor %}
+     <section class="overflow-x-auto">
+  <h2 class="text-xl font-bold underline text-center text-gray-800 py-8">Elenco de la pelicula</h2>
+  <div class="flex flex-nowrap justify-start gap-6 px-4">
+    {% for credit in credits %}
+      <a href="{% url 'actor_detail' credit.person.id %}" class="flex-shrink-0">
+        <div class="bg-gray-100 rounded-lg shadow-md flex flex-col items-center p-4 w-48">
+          <div class="mt-4">
+            <h3 class="text-lg font-semibold text-gray-800">{{ credit.person.name }}</h3>
+            <p class="text-sm text-gray-600">{{ credit.job.name }}</p>
+          </div>
         </div>
-      </section>
+      </a>
+    {% endfor %}
+  </div>
+</section>
 
+     
       {% if user.is_authenticated %}
       <!-- Space for Review -->
       <div class="bg-gray-100 p-4 rounded-lg shadow-inner mt-6">
