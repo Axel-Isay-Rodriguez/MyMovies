@@ -4,7 +4,7 @@
 <article class="container mx-auto p-6 bg-white shadow-lg rounded-lg">
   <div class="flex justify-center mb-6">
     <h1 class="text-3xl font-bold">{{ movie.title }} <span class="text-black-600">({{ movie.release_date|date:"Y" }})</span></h1>
-    <p class="bg-indigo-500 text-white rounded-full px-3 py-1 ml-4">Average Rating: {{ average_rating }}</p>
+    <p class="bg-indigo-500 text-white rounded-full px-3 py-1 ml-4">Calificación Promedio: {{ average_rating }}</p>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -14,15 +14,15 @@
 
     <div class="md:col-span-2">
       <div class="mb-4">
-        <h2 class="text-2xl font-semibold">Overview</h2>
+        <h2 class="text-2xl font-semibold">Descripción General:</h2>
         <p class="text-gray-700">{{ movie.overview }}</p>
       </div>
 
       <div class="mb-4">
-        <h2 class="text-2xl font-semibold">Details</h2>
+        <h2 class="text-2xl font-semibold">Detalles de la pelicula:</h2>
         <ul class="flex flex-wrap gap-2 text-gray-600">
-          <li class="bg-gray-200 rounded px-2 py-1">Released: {{ movie.release_date|date:"d/m/Y" }}</li>
-          <li class="bg-gray-200 rounded px-2 py-1">Runtime: {{ movie.running_time }} mins</li>
+          <li class="bg-gray-200 rounded px-2 py-1">Fecha de lanzamiento: {{ movie.release_date|date:"d/m/Y" }}</li>
+          <li class="bg-gray-200 rounded px-2 py-1">Duración: {{ movie.running_time }} mins</li>
           {% for genre in movie.genres.all %}
             <li class="bg-gray-200 rounded px-2 py-1">{{ genre.name }}</li>
           {% endfor %}
@@ -30,18 +30,18 @@
       </div>
 
       <div class="bg-gray-100 p-4 rounded-lg shadow-inner">
-        <h2 class="cursor-pointer font-semibold text-gray-700">Production Details</h2>
+        <h2 class="cursor-pointer font-semibold text-gray-700">Detalles de producción:</h2>
         <div class="mt-2 space-y-2">
-          <p>Budget: ${{ movie.budget|floatformat:0 }}</p>
-          <p>Revenue: ${{ movie.revenue|floatformat:0 }}</p>
+          <p>Presupuesto: ${{ movie.budget|floatformat:0 }}</p>
+          <p>Ganancias: ${{ movie.revenue|floatformat:0 }}</p>
         </div>
       </div>
 
       <section class="overflow-x-auto">
-        <h2 class="text-xl font-bold underline text-center text-gray-800 py-8">Movie Cast</h2>
+        <h2 class="text-xl font-bold underline text-center text-gray-800 py-8">Elenco de la pelicula</h2>
         <div class="flex flex-wrap justify-center gap-6">
           {% for credit in credits %}
-          <a href="{% url 'actor_detail' credit.person.name %}" class="flex-shrink-0">
+          <a href="{% url 'actor_detail' credit.person.id %}" class="flex-shrink-0">
               <div class="bg-gray-100 rounded-lg shadow-md flex flex-col items-center p-4 w-48">
                 <img src="https://image.tmdb.org/t/p/w500/{{ credit.person.poster_path }}" alt="Imagen de Casting" class="rounded-full w-24 h-24 object-cover">
                 <div class="mt-4">
@@ -57,42 +57,42 @@
       {% if user.is_authenticated %}
       <!-- Space for Review -->
       <div class="bg-gray-100 p-4 rounded-lg shadow-inner mt-6">
-          <h2 class="text-2xl font-semibold text-gray-700 mb-4">Add a Review</h2>
+          <h2 class="text-2xl font-semibold text-gray-700 mb-4">Agrega una reseña</h2>
           <form action="/movies/{{ movie.id }}/review/submit/" method="post">
           {% csrf_token %}
           <div class="mb-4">
-            <label for="rating" class="block text-gray-700 font-bold mb-2">Rating:</label>
+            <label for="rating" class="block text-gray-700 font-bold mb-2">Calificación:</label>
             <input type="number" id="rating" name="rating" min="1" max="100" required class="block w-full p-2 border rounded mb-4">
           </div>
           <div class="mb-4">
-            <label for="review" class="block text-gray-700 font-bold mb-2">Description:</label>
+            <label for="review" class="block text-gray-700 font-bold mb-2">Reseña:</label>
             <textarea id="review" name="review" rows="4" cols="50" class="block w-full p-2 border rounded mb-4"></textarea>
           </div>
-          <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded">Submit Review</button>
+          <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded">Enviar Reseña</button>
         </form>
       </div>
       <!-- End Space for Review -->
       {% else %}
       <div class="bg-gray-100 p-4 rounded-lg shadow-inner mt-6">
-          <p><a href="{% url 'login_view' %}" class="text-indigo-600 hover:underline">Sign In</a> to leave a review</p>
+          <p><a href="{% url 'login_view' %}" class="text-indigo-600 hover:underline">Inicia Sesión</a> para dejar una reseña</p>
       </div>
       {% endif %}
 
       <!-- Display Existing Reviews -->
       <div class="bg-gray-100 p-4 rounded-lg shadow-inner mt-6">
-        <h2 class="text-2xl font-semibold text-gray-700 mb-4">Existing Reviews</h2>
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">Reviews Existentes</h2>
         {% if reviews %}
           <ul class="space-y-4">
             {% for review in reviews %}
               <li class="p-4 border rounded-lg bg-white shadow-md mb-4">
-                <p class="text-gray-800 font-semibold">User: <a href="{% url 'user_view' review.user.id %}" class="text-indigo-600 hover:underline">{{ review.user.username }}</a></p>
-                <p class="text-gray-600">Rating: {{ review.rating }}</p>
-                <p class="text-gray-600">Description: {{ review.review }}</p>
+                <p class="text-gray-800 font-semibold">Usuario: <a href="{% url 'user_view' review.user.id %}" class="text-indigo-600 hover:underline">{{ review.user.username }}</a></p>
+                <p class="text-gray-600">Calificación: {{ review.rating }}</p>
+                <p class="text-gray-600">Reseña: {{ review.review }}</p>
               </li>
             {% endfor %}
           </ul>
         {% else %}
-          <p class="text-gray-600">No reviews available.</p>
+          <p class="text-gray-600">No hay reseñas disponibles</p>
         {% endif %}
       </div>
       <!-- End Display Existing Reviews -->

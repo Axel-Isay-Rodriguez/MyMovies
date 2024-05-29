@@ -1,10 +1,10 @@
 from django.contrib.auth.models import User
 from django.db.models.fields import forms
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.utils.translation import deactivate
-from movies.models import Genre, Movie, MovieCredit, Person, MovieReview
+from movies.models import Genre, Movie, MovieCredit, Person, MovieReview 
 from django.contrib import messages
 from .forms import NameForm, MovieReviewForm
 # Create your views here.
@@ -113,9 +113,9 @@ def movie_detail(request, movie_id):
     }
     return render(request, "movies/movie_detail.html", context=context)
 
-def actor_detail(request, name):
-    actor = Person.objects.filter(name=name).first()
-    credits = MovieCredit.objects.filter(person_id=actor.id)
+def actor_detail(request, actor_id):
+    actor = get_object_or_404(Person, id=actor_id)
+    credits = MovieCredit.objects.filter(person_id=actor.id) 
     context = {
         'person': actor,
         'credits': credits,

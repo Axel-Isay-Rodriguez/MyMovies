@@ -14,7 +14,7 @@ def add_movie(movie_id):
 
     '''
     url --request GET \
-         --url 'https://api.themoviedb.org/3/movie/76341?language=en-US' \
+         --url 'https://api.themoviedb.org/3/movie/76341?language=es-MX' \
          --header 'Authorization: Aasdfqwer' \
          --header 'accept: application/json'
     '''
@@ -24,11 +24,11 @@ def add_movie(movie_id):
 
 
 
-    r = requests.get(f'https://api.themoviedb.org/3/movie/{movie_id}?language=en-US', headers=headers) 
+    r = requests.get(f'https://api.themoviedb.org/3/movie/{movie_id}?language=es-MX', headers=headers) 
     print(r.json())
     m = r.json()
 
-    conn = psycopg2.connect(f"dbname=django_test user=soware password={env('PASSWORD')}")
+    conn = psycopg2.connect(f"dbname=django_bootstrap user=ubuntu password={env('777')}")
     cur = conn.cursor()
 
     sql = 'SELECT * FROM movies_movie WHERE title = %s'
